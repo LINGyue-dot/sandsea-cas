@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# CAS 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 具备能力
 
-## Available Scripts
+* 能配置子域名，即开白名单
+* 
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 基本流程
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+当前 A 需要登录，CAS 系统为 S 
 
-### `npm test`
+1. A 未登录，重定向到 S 系统
+   1. A 未登录状态如何判断：A 向 S 的后端验证自己的 cookie 
+2. S 系统（登录），并向 S 后端发送 A 站的域名信息换取 A 站的一次性 code
+   1. S 后端需要先验证 该域名信息是否在白名单内，若是就重定向回 A 站并携带 code
+3. 回到 A 站之后，A 站向 S 后端换取自己的 cookie （携带自己的域名信息）
+4. 此后每次验证登录状态都向 S 后端进行验证是否登录
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 退出账号流程
 
-### `npm run eject`
+1. 消除自身的 cookie 
+2. 重定向回 S logout `S.com/logout?from_url ='xxxx'` ，消除 CAS 系统的 cookie
+3. S logout 页面再重定向回 S login `S.com/login?redirect_url='xxx'`（保证此时点击登录能再次回到点击退出的页面）
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# 其余
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 项目风格
+
+文件夹名统一小写，若多单词就 - 连接
+文件名 tsx 文件等统一使用大驼峰
