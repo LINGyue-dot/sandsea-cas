@@ -7,7 +7,7 @@ import DashBoard from "./pages/operation/dashboard";
 
 import "./utils/wrapAxios";
 
-export const appWrapper: React.CSSProperties = {
+const appWrapper: React.CSSProperties = {
 	width: "100vw",
 	height: "100vh",
 	overflow: "hidden",
@@ -16,19 +16,18 @@ export const appWrapper: React.CSSProperties = {
 function App() {
 	return (
 		<div style={appWrapper}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Navigate to="/operation/dashboard" />} />
-					<Route path="/login" element={<Login />} />
-
-					<AuthContext.Provider value={authValue}>
+			<AuthContext.Provider value={authValue}>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<Navigate to="/operation/dashboard" />} />
+						<Route path="/login" element={<Login />} />
 						<Route path="operation" element={<OperationLayout />}>
 							<Route path="dashboard" element={<DashBoard />} />
 							<Route path="*" element={<Navigate to="dashboard" />} />
 						</Route>
-					</AuthContext.Provider>
-				</Routes>
-			</BrowserRouter>
+					</Routes>
+				</BrowserRouter>
+			</AuthContext.Provider>
 		</div>
 	);
 }

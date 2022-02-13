@@ -37,6 +37,6 @@ export const authValue = {
   }
 }
 
-const AuthContext = React.createContext<AuthContextType>(initAuth)
+const AuthContext = React.createContext<AuthContextType>(authValue)
 
 export default AuthContext
